@@ -15,7 +15,7 @@
  First install all requirements (the only one is bottle) either with pip or 
  manually.
  
-    `pip install -r pip_requirements.txt`
+    pip install -r pip_requirements.txt
     
  You will need a terminal-based image capturing app which can receive a save
   path argument. I've used `imagesnap` for this on OS X. Install it with 
@@ -33,7 +33,7 @@
    
  Finally, run the server:
  
-    `server.py`
+    server.py
  
  All should work then. The default location is at `localhost:8080`. Default 
  log record is stored in `server.log`.
@@ -41,12 +41,9 @@
 ## Problems
  
  The execution of the script is pretty secure, because a client obviously 
- doesn't have access to it - it's not served in any way, plus in most cases 
- one won't need to exec it with su or sudo, and if you do then something 
- is wrong with you!
- 
- However, cookies protection is pretty lame. You may want to patch that.
- 
- File names are 7 letter randomly generated strings and may overlap 
- eventually.
+ doesn't have access to it, because it's not served in any way, plus in most 
+ cases one won't need to exec it with su or sudo, and if you do then something 
+ is wrong with you! However, cookies protection is pretty lame. You may want
+ to patch that. File names are 7 letter randomly generated strings and may 
+ overlap eventually.
  
