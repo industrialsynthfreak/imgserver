@@ -3,13 +3,13 @@
  A simple remote snapshot server. Client can connect to a remote camera
  and take a snapshot.
  
- ## Usage
+## Usage
  
  It's pretty simple. You connect with it from your browser and press "get 
  snapshot". You will be redirected to a page with a shot on it, and its name
   will be stored in your cookies in case you'll come back.
  
- ## Deployment
+## Deployment
  
  Tested in python2.7. Should also work in python3.
  First install all requirements (the only one is bottle) either with pip or 
@@ -38,7 +38,7 @@
  All should work then. The default location is at `localhost:8080`. Default 
  log record is stored in `server.log`.
  
- ## Problems
+## Problems
  
  The execution of the script is pretty secure, because a client obviously 
  doesn't have access to it - it's not served in any way, plus in most cases 
