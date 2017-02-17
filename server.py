@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import tempfile
 import logging
 
@@ -5,16 +7,10 @@ from subprocess import Popen, PIPE
 
 from bottle import Bottle, template, static_file, request, response
 
-IMG_PATH = 'static/img'
-DEFAULT_IMG = 'dawg.jpg'
-SECRET_KEY = 'Wow-its-really-The-secret'
-SCRIPT_PATH = './camera_access.sh'
-DEBUG = True
-LOG = 'server.log'
+from config import *
 
 _name_gen = tempfile._get_candidate_names()
 _app = Bottle()
-
 logging.basicConfig(filename=LOG, format='%(asctime)-15s: %(message)s',
                     level=logging.INFO)
 
@@ -67,4 +63,4 @@ def error404(error):
 
 
 if __name__ == "__main__":
-    _app.run(host='localhost', port=8080, debug=DEBUG)
+    _app.run(host=HOST, port=PORT, debug=DEBUG)
