@@ -1,15 +1,25 @@
 body {
     background: black;
+    color: white;
+    padding: 1rem;
+}
+
+input {
+    background: darkgray;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 100;
+}
+
+#welcome-message {
 }
 
 #image-form {
-    padding: 1rem;
-    color: white;
-    background: black;
 }
 
 #image-data {
-    width: 80%;
+    width: 75%;
     border-radius: 2rem;
-
 }

@@ -3,29 +3,37 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>D.O.G's Image Server</title>
+        <title>D.O.G. Image Server</title>
         <meta name="description" content="random image generation server">
 
-        <link rel="stylesheet" type="text/css" href="{{ url('static', filepath='css/normalize.css' }}">
-        <link rel="stylesheet" type="text/css" href="{{ url('static', filepath='css/main.css' }}">
-        <link rel="stylesheet" type="text/css" href="{{ url('static', filepath='css/index.css' }}">
-        <script src="{{ url('static', filepath='js/vendor/modernizr-2.8.3.min.js' }}"></script>
+        <link rel="stylesheet" type="text/css" href="/static/css/normalize.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+        <script src="/static/js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            <p class="browserupgrade">You are using an
+                <strong>outdated</strong> browser. Please
+                <a href="http://browsehappy.com/">upgrade your browser</a>
+                to improve your experience.</p>
         <![endif]-->
 
-        <!-- Add your site or application content here -->
+        <div id="welcome-message">
+            <h1>Welcome to D.O.G. image server</h1>
+        </div>
+
         <div id="image-form">
-            <img id="image-data" src="img/default.jpg" alt="image-data">
-            <p>Press "getimage" to receive a snapshot.</p>
-            <form action="">
-                    <input value="getimage" type="submit">
+            <img id="image-data" src="{{ img }}" alt="image-data">
+
+            <p>Press "get image" to receive a snapshot</p>
+
+            <form action="" method="get">
+                <input name="get image" value="get image" type="submit">
             </form>
         </div>
 
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+        <script src="/static/js/main.js">
+        </script>
     </body>
 </html>
