@@ -1,0 +1,10 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    industrialsynthfreak -- web-dev -- github.com/industrialsynthfreak
+
+# TECHNOLOGY COLOPHON
+
+    CSS3, HTML5, Python, Modernizr, Normalize.css
