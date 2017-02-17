@@ -1,0 +1,15 @@
+body {
+    background: black;
+}
+
+#image-form {
+    padding: 1rem;
+    color: white;
+    background: black;
+}
+
+#image-data {
+    width: 80%;
+    border-radius: 2rem;
+
+}
