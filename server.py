@@ -11,6 +11,8 @@ from bottle import Bottle, template, static_file, request, response, redirect
 
 from config import *
 
+__version__ = '1.0.0'
+
 _name_gen = tempfile._get_candidate_names()
 _dead_time = timedelta(seconds=DEAD_TIME)
 _last_accessed = {'timestamp': None, 'img': None}
