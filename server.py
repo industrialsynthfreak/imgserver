@@ -20,26 +20,6 @@ logging.basicConfig(filename=LOG, format='%(asctime)-15s: %(message)s',
                     level=logging.INFO, filemode='w')
 
 
-@_app.route('/static/css/<filename:re:.*\.css>')
-def static_css(filename):
-    return static_file(filename, root='static/css')
-
-
-@_app.route('/%s/<filename:re:.*\.(jpe?g|gif|png|ico|svg)>' % IMG_PATH)
-def static_img(filename):
-    return static_file(filename, root='static/img')
-
-
-@_app.route('/static/js/<filename:re:.*\.js>')
-def static_js(filename):
-    return static_file(filename, root='static/js')
-
-
-@_app.route('/<filename:re:.*\.txt>')
-def static_txt(filename):
-    return static_file(filename, root='static')
-
-
 @_app.get('/')
 @_app.get('/index')
 def index():
@@ -66,7 +46,7 @@ def index():
 
     if request.GET.get('get image'):
         if not _last_accessed['timestamp']:
-            img = generate_unique()
+            generate_unique()
         else:
             timedelta = datetime.utcnow() - _last_accessed['timestamp']
             if _last_accessed['img'] and timedelta <= _dead_time:
@@ -77,12 +57,32 @@ def index():
     else:
         logging.info('accessed image "%s" from %s' % (img, ip))
 
-    return template('index.html', img='%s/%s' % (IMG_PATH, img))
+    return template('templates/index.html', img='%s/%s' % (IMG_PATH, img))
 
 
 @_app.error(404)
 def error404(error):
-    return template('404.html')
+    return template('templates/404.html')
+
+
+@_app.route('/static/css/<filename:re:.*\.css>')
+def static_css(filename):
+    return static_file(filename, root='static/css')
+
+
+@_app.route('/%s/<filename:re:.*\.(jpe?g|gif|png|ico|svg)>' % IMG_PATH)
+def static_img(filename):
+    return static_file(filename, root='static/img')
+
+
+@_app.route('/static/js/<filename:re:.*\.js>')
+def static_js(filename):
+    return static_file(filename, root='static/js')
+
+
+@_app.route('/<filename:re:.*\.txt>')
+def static_txt(filename):
+    return static_file(filename, root='static')
 
 
 if __name__ == "__main__":

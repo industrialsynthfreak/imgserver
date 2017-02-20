@@ -133,3 +133,10 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+.DS_Store
+
+.idea/dictionaries/
+.idea/imgserver.iml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml

@@ -35,7 +35,9 @@
  
     server.py
  
- All should work now. Default log record will be stored in `server.log`.
+ All should work now. Default log record will be stored in `server.log`. If 
+ you want you can run unit tests: `python2 tests.py` (they require the 
+ server to be running).
  
 ## Problems
  
