@@ -34,9 +34,10 @@ def index():
             _last_accessed['timestamp'] = datetime.utcnow()
             _last_accessed['img'] = img
             logging.info('requested image "%s" from %s' % (img, ip))
+            return img
         else:
             logging.error('an error has occurred during the script execution')
-        redirect('/')
+            return None
 
     ip = request.environ.get('REMOTE_ADDR')
 
@@ -45,18 +46,13 @@ def index():
         img = DEFAULT_IMG
 
     if request.GET.get('get image'):
-        if not _last_accessed['timestamp']:
-            generate_unique()
+        if _last_accessed['timestamp'] and (datetime.utcnow() -_last_accessed['timestamp']) <= _dead_time:
+            img = _last_accessed['img']
         else:
-            timedelta = datetime.utcnow() - _last_accessed['timestamp']
-            if _last_accessed['img'] and timedelta <= _dead_time:
-                img = _last_accessed['img']
-                logging.info('accessed image "%s" from %s' % (img, ip))
-            else:
-                generate_unique()
-    else:
-        logging.info('accessed image "%s" from %s' % (img, ip))
+            _img = generate_unique()
+            if _img: img = _img
 
+    logging.info('accessed image "%s" from %s' % (img, ip))
     return template('templates/index.html', img='%s/%s' % (IMG_PATH, img))
 
 
