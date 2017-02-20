@@ -1,4 +1,9 @@
-from HTMLParser import HTMLParser
+import sys
+
+if sys.version[0] == '2':
+    from HTMLParser import HTMLParser
+else:
+    from html.parser import HTMLParser
 
 
 class ImageTagParser(HTMLParser):

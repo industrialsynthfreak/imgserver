@@ -1,6 +1,7 @@
 import asyncore
 import socket
 import logging
+import sys
 
 from client.image_tag_parser import ImageTagParser
 
@@ -20,6 +21,8 @@ class BasicClient(asyncore.dispatcher):
         self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connect((host, port))
         self.buffer = 'GET %s HTTP/1.0\r\n\r\n' % path
+        if sys.version[0] != '2':
+            self.buffer = bytes(self.buffer, 'ascii')
         self.tag_parser = ImageTagParser()
 
     def handle_connect(self):
@@ -28,6 +31,8 @@ class BasicClient(asyncore.dispatcher):
 
     def handle_read(self):
         data = self.recv(8192)
+        if sys.version[0] != '2':
+            data = data.decode('ascii')
         self.tag_parser.feed(data)
         if self.log and self.tag_parser.url:
             logging.info('Fetched %s' % self.tag_parser.url)
