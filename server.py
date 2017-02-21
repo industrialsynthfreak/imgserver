@@ -33,7 +33,7 @@ def index():
         pipen = Popen(script, shell=True, stdout=PIPE,
                       stderr=PIPE)
         out, err = pipen.communicate()
-        if pipen.returncode != 0:
+        if pipen.returncode == 0:
             response.set_cookie('img-token', img, secret=SECRET_KEY)
             _last_accessed['timestamp'] = datetime.utcnow()
             _last_accessed['img'] = img
