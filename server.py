@@ -17,6 +17,7 @@ _name_gen = tempfile._get_candidate_names()
 _dead_time = timedelta(seconds=DEAD_TIME)
 _last_accessed = {'timestamp': None, 'img': None}
 _app = Bottle()
+_path = os.path.realpath(os.path.dirname(__file__))
 
 logging.basicConfig(filename=LOG, format='%(asctime)-15s: %(message)s',
                     level=logging.INFO, filemode='w')
@@ -29,16 +30,18 @@ def index():
     def generate_unique():
         img = '%s.%s' % (next(_name_gen), IMG_TYPE)
         script = '%s %s/%s' % (SCRIPT_PATH, IMG_PATH, img)
-        out, err = Popen(script, shell=True, stdout=PIPE,
-                         stderr=PIPE).communicate()
-        if not err:
+        pipen = Popen(script, shell=True, stdout=PIPE,
+                      stderr=PIPE)
+        out, err = pipen.communicate()
+        if pipen.returncode != 0:
             response.set_cookie('img-token', img, secret=SECRET_KEY)
             _last_accessed['timestamp'] = datetime.utcnow()
             _last_accessed['img'] = img
             logging.info('requested image "%s" from %s' % (img, ip))
             return img
         else:
-            logging.error('an error has occurred during the script execution')
+            logging.error('an error has occurred during the script '
+                          'execution: %s' % err)
             return None
 
     ip = request.environ.get('REMOTE_ADDR')
@@ -75,12 +78,12 @@ def static_img(filename):
 
 @_app.route('/static/js/<filename:re:.*\.js>')
 def static_js(filename):
-    return static_file(filename, root='static/js')
+    return static_file(filename, root=os.path.join(_path, 'static/js'))
 
 
 @_app.route('/<filename:re:.*\.txt>')
 def static_txt(filename):
-    return static_file(filename, root='static')
+    return static_file(filename, root=os.path.join(_path, 'static'))
 
 
 if __name__ == "__main__":
