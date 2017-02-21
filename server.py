@@ -7,7 +7,7 @@ import os
 from datetime import datetime, timedelta
 from subprocess import Popen, PIPE
 
-from bottle import Bottle, template, static_file, request, response, redirect
+from bottle import Bottle, template, static_file, request, response
 
 from config import *
 
@@ -16,8 +16,8 @@ __version__ = '1.0.0'
 _name_gen = tempfile._get_candidate_names()
 _dead_time = timedelta(seconds=DEAD_TIME)
 _last_accessed = {'timestamp': None, 'img': None}
+
 _app = Bottle()
-_path = os.path.realpath(os.path.dirname(__file__))
 
 logging.basicConfig(filename=LOG, format='%(asctime)-15s: %(message)s',
                     level=logging.INFO, filemode='w')
@@ -51,11 +51,14 @@ def index():
         img = DEFAULT_IMG
 
     if request.GET.get('get image'):
-        if _last_accessed['timestamp'] and (datetime.utcnow() -_last_accessed['timestamp']) <= _dead_time:
+        if _last_accessed['timestamp'] and (
+                    datetime.utcnow() -_last_accessed['timestamp']
+        ) <= _dead_time:
             img = _last_accessed['img']
         else:
             _img = generate_unique()
-            if _img: img = _img
+            if _img:
+                img = _img
 
     logging.info('accessed image "%s" from %s' % (img, ip))
     return template('templates/index.html', img='%s/%s' % (IMG_PATH, img))
@@ -71,19 +74,19 @@ def static_css(filename):
     return static_file(filename, root='static/css')
 
 
-@_app.route('/%s/<filename:re:.*\.(jpe?g|gif|png|ico|svg)>' % IMG_PATH)
+@_app.route('/static/img/<filename:re:.*\.(jpe?g|gif|png|ico|svg)>')
 def static_img(filename):
-    return static_file(filename, root='static/img')
+    return static_file(filename, root=IMG_PATH)
 
 
 @_app.route('/static/js/<filename:re:.*\.js>')
 def static_js(filename):
-    return static_file(filename, root=os.path.join(_path, 'static/js'))
+    return static_file(filename, root='static/js')
 
 
 @_app.route('/<filename:re:.*\.txt>')
 def static_txt(filename):
-    return static_file(filename, root=os.path.join(_path, 'static'))
+    return static_file(filename, root='static')
 
 
 if __name__ == "__main__":
