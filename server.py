@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from subprocess import Popen, PIPE
 
 from bottle import Bottle, template, static_file, request, response
+from gevent.wsgi import WSGIServer
 
 from config import *
 
@@ -91,5 +92,7 @@ def static_txt(filename):
 
 if __name__ == "__main__":
     logging.info('starting server at %s %d' % (HOST, PORT))
-    _app.run(host=HOST, port=PORT, debug=DEBUG)
+    #_app.run(host=HOST, port=PORT, debug=DEBUG)
+    server = WSGIServer((HOST, PORT), _app)
+    server.serve_forever()
     logging.info('server shutdown')
